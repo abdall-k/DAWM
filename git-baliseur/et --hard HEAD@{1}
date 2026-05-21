@@ -1,0 +1,25 @@
+[33m22ff19f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/cheikh/format-coords[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
+[33m6b3d135[m HEAD@{1}: commit: re-commit apres mixed
+[33m22ff19f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/cheikh/format-coords[m[33m)[m HEAD@{2}: reset: moving to HEAD~1
+[33mab91ee4[m HEAD@{3}: commit: re-commit apres soft reset
+[33m22ff19f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/cheikh/format-coords[m[33m)[m HEAD@{4}: reset: moving to HEAD~1
+[33m36a2cba[m HEAD@{5}: commit: commit a annuler
+[33m22ff19f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/cheikh/format-coords[m[33m)[m HEAD@{6}: reset: moving to HEAD~1
+[33m728898b[m HEAD@{7}: commit (merge): merge: resout conflit sur format DKR-01
+[33m22ff19f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/cheikh/format-coords[m[33m)[m HEAD@{8}: commit: change le format vers N/W
+[33m65ee90f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{9}: checkout: moving from feature/cheikh/format-coords to feature/cheikh/format-coords
+[33m65ee90f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{10}: checkout: moving from main to feature/cheikh/format-coords
+[33m65ee90f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{11}: checkout: moving from feature/aminata/corrige-coords to main
+[33ma4fb8d5[m[33m ([m[1;32mfeature/aminata/corrige-coords[m[33m)[m HEAD@{12}: commit: corrige les coordonnees du Phare
+[33m65ee90f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{13}: checkout: moving from main to feature/aminata/corrige-coords
+[33m65ee90f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{14}: checkout: moving from main to main
+[33m65ee90f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{15}: pull: Fast-forward
+[33m90270ff[m HEAD@{16}: checkout: moving from feature/abdallah-k/ajout-thies to main
+[33mf085ae6[m[33m ([m[1;31morigin/feature/abdallah-k/ajout-thies[m[33m)[m HEAD@{17}: commit: ajoute les balises du port de Thies
+[33m90270ff[m HEAD@{18}: checkout: moving from main to feature/abdallah-k/ajout-thies
+[33m90270ff[m HEAD@{19}: checkout: moving from feature/abdallah/test-branche to main
+[33m85b5bbb[m[33m ([m[1;32mfeature/abdallah/test-branche[m[33m)[m HEAD@{20}: commit: feat: modifie le README depuis la branche
+[33m90270ff[m HEAD@{21}: checkout: moving from main to feature/abdallah/test-branche
+[33m90270ff[m HEAD@{22}: commit: ajoute balise DKR-04 Yoff
+[33m7417af2[m HEAD@{23}: commit: ajoute la liste initiale des balises
+[33mbd2b5d2[m HEAD@{24}: commit (initial): init : cree le README

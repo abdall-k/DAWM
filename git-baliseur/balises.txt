@@ -1,0 +1,7 @@
+# Liste des balises maritimes du port de Dakar
+# Format : code,nom,latitude,longitude
+DKR-01,Phare des Mamelles,14.7167,-17.5167
+DKR-02,Bouee Goree-Nord,14.6700,-17.3950
+DKR-03,Phare de l'Ile aux Serpents,14.6650,-17.4500
+DKR-04,Bouee de Yoff,14.7500,-17.4750
+THIS-01,Balise de Thies,14.7833,-16.9333
