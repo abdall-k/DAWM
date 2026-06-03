@@ -1,4 +1,5 @@
 import { useState } from "react";
+import EvenementCarte from "./components/EvenementCarte";
 
 const App = () => {
   const [evenements, setEvenements] = useState([]);
@@ -40,32 +41,9 @@ const App = () => {
         {chargement ? "Chargement..." : "Charger les evenements"}
       </button>
 
-      {evenements.map((ev) => (
-        <div
-          key={ev.id}
-          style={{
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            padding: "1rem",
-            marginTop: "1rem"
-          }}
-        >
-          <h3>{ev.titre}</h3>
-
-          <p>
-            <strong>Catégorie :</strong> {ev.categorie}
-          </p>
-
-          <p>
-            <strong>Lieu :</strong> {ev.lieu_nom}
-          </p>
-
-          <p>
-            <strong>Prix :</strong>{" "}
-            {ev.prix === 0 ? "Gratuit" : `${ev.prix} FCFA`}
-          </p>
-        </div>
-      ))}
+      { evenements.map(ev=>(
+        <EvenementCarte key ={ ev . id } ev ={ ev } afficherDetails ={false} />))
+        }
     </div>
   );
 };
