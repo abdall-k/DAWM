@@ -43,7 +43,14 @@ const App = () => {
       document.title = "SenEvent";
     }
   }, [evenementsFiltres.length]);
-
+useEffect(() => {
+    const debut = Date.now();
+    
+    // Fonction de nettoyage (cleanup) déclenchée au démontage
+    return () => {
+      console.log("Temps sur la page :", Date.now() - debut, "ms");
+    };
+  }, []);
   return (
     <div className={styles.container}>
       <h1 className={styles.titre}>SenEvent — Evenements a Dakar</h1>
