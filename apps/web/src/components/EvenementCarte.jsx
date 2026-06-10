@@ -1,17 +1,40 @@
+// import styles from "./EvenementCarte.module.css";
+
+// const EvenementCarte = ({ ev, afficherDetails }) => {
+//     const prix = ev.prix === 0 ? "Gratuit" : `${ev.prix} FCFA`;
+//     return (
+//         <div className={styles.carte}>
+//             <h3 className={styles.titre}>{ev.titre}</h3>
+//             <p className={styles.info}>Categorie : {ev.categorie}</p>
+//             {afficherDetails && (
+//                 <p className={styles.info}>Lieu : {ev.lieu_nom}</p>
+//             )}
+//             <p className={styles.prix}>{prix}</p>
+//         </div>
+//     );
+// };
+
+// export default EvenementCarte;
+
+
 import styles from "./EvenementCarte.module.css";
 
 const EvenementCarte = ({ ev, afficherDetails }) => {
-    const prix = ev.prix === 0 ? "Gratuit" : `${ev.prix} FCFA`;
-    return (
-        <div className={styles.carte}>
-            <h3 className={styles.titre}>{ev.titre}</h3>
-            <p className={styles.info}>Categorie : {ev.categorie}</p>
-            {afficherDetails && (
-                <p className={styles.info}>Lieu : {ev.lieu_nom}</p>
-            )}
-            <p className={styles.prix}>{prix}</p>
-        </div>
-    );
+  const prix = ev.prix === 0 ? "Gratuit" : `${ev.prix} FCFA`;
+
+  return (
+    <div className={styles.carte}>
+      <h3 className={styles.titre}>{ev.titre}</h3>
+      <p className={styles.info}>Categorie: {ev.categorie}</p>
+      
+      {/* Rendu conditionnel standard */}
+      {afficherDetails && (
+        <p className={styles.info}>Lieu: {ev.lieu_nom}</p>
+      )}
+      
+      <p className={styles.prix}>{prix}</p>
+    </div>
+  );
 };
 
 export default EvenementCarte;
