@@ -106,24 +106,38 @@ const App = () => {
   }, [evenementsFiltres.length]);
 
 
-  return (
+ return (
     <div className={styles.container}>
-      <h1 className={styles.titre}>SenEvent --- Evenements a Dakar</h1>
-      <SearchBar recherche={recherche} onRecherche={setRecherche} />
-      <p className={styles.compteur}>
-        {evenementsFiltres.length} evenement(s) trouve(s)
-      </p>
-      {evenementsFiltres.map(ev => (
-        <EvenementCarte key={ev.id} ev={ev} afficherDetails={true} />
-      ))}
+      <h1 className={styles.titre}>SenEvent — Evenements a Dakar</h1>
+
+      <EtatChargement
+        chargement={chargement}
+        erreur={erreur}
+        onReessayer={charger}
+      />
+
+      {!chargement && !erreur && (
+        <>
+          <SearchBar recherche={recherche} onRecherche={setRecherche} />
+          <p className={styles.compteur}>
+            {evenementsFiltres.length} evenement(s) trouve(s)
+          </p>
+          {evenementsFiltres.length === 0 ? (
+            <p className={styles.messageVide}>
+              Aucun evenement ne correspond.
+            </p>
+          ) : (
+            evenementsFiltres.map(ev => (
+              <EvenementCarte key={ev.id} ev={ev} afficherDetails={true} />
+            ))
+          )}
+        </>
+      )}
     </div>
   );
 };
 
 export default App;
-
-
-
 
 
 
