@@ -1,99 +1,40 @@
-// import { useState } from "react";
-// import EvenementCarte from "./components/EvenementCarte";
-// import SearchBar from "./components/SearchBar";
-// import styles from "./App.module.css";
-
-// const App = () => {
-//     const [evenements, setEvenements] = useState([]);
-//     const [chargement, setChargement] = useState(false);
-//     const [recherche, setRecherche] = useState("");
-
-//     const charger = async () => {
-//         setChargement(true);
-//         try {
-//             const reponse = await fetch("/evenements.json");
-//             const data = await reponse.json();
-//             setEvenements(data);
-//         } catch (error) {
-//             console.error("Erreur :", error);
-//         }
-//         setChargement(false);
-//     };
-
-//     const evenementsFiltres = evenements.filter(ev =>
-//         ev.titre.toLowerCase().includes(recherche.toLowerCase())
-//     );
-
-//     return (
-//         <div className={styles.container}>
-//             <h1 className={styles.titre}>SenEvent --- Evenements a Dakar</h1>
-//             <button 
-//                 className={styles.bouton}
-//                 onClick={charger}
-//                 disabled={chargement}
-//             >
-//                 {chargement ? "Chargement..." : "Charger les evenements"}
-//             </button>
-
-//             <SearchBar recherche={recherche} onRecherche={setRecherche} />
-
-//             <p className={styles.compteur}>
-//                 {evenementsFiltres.length} evenement(s) trouve(s)
-//             </p>
-
-//             {evenementsFiltres.map(ev => (
-//                 <EvenementCarte key={ev.id} ev={ev} afficherDetails={true} />
-//             ))}
-//         </div>
-//     );
-// };
-
-// export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useState, useEffect } from "react";
 import EvenementCarte from "./components/EvenementCarte";
 import SearchBar from "./components/SearchBar";
+import EtatChargement from "./components/EtatChargement";
 import styles from "./App.module.css";
 
 const App = () => {
   const [evenements, setEvenements] = useState([]);
   const [chargement, setChargement] = useState(true);
+  const [erreur, setErreur] = useState(null);
   const [recherche, setRecherche] = useState("");
 
-  useEffect(() => {
-    const charger = async () => {
-      try {
-        const reponse = await fetch("/evenements.json");
-        const data = await reponse.json();
-        setEvenements(data);
-      } catch (error) {
-        console.error("Erreur :", error);
+  const charger = async () => {
+    setChargement(true);
+    setErreur(null);
+
+    try {
+      const reponse = await fetch("/evenements.json");
+
+      if (!reponse.ok) {
+        throw new Error(`Erreur HTTP ${reponse.status}`);
       }
+
+      const data = await reponse.json();
+      setEvenements(data);
+    } catch (e) {
+      setErreur(e.message);
+    } finally {
       setChargement(false);
-    };
+    }
+  };
+
+  useEffect(() => {
     charger();
   }, []);
 
-  
-
-  const evenementsFiltres = evenements.filter(ev =>
+  const evenementsFiltres = evenements.filter((ev) =>
     ev.titre.toLowerCase().includes(recherche.toLowerCase())
   );
 
@@ -105,8 +46,7 @@ const App = () => {
     }
   }, [evenementsFiltres.length]);
 
-
- return (
+  return (
     <div className={styles.container}>
       <h1 className={styles.titre}>SenEvent — Evenements a Dakar</h1>
 
@@ -118,17 +58,26 @@ const App = () => {
 
       {!chargement && !erreur && (
         <>
-          <SearchBar recherche={recherche} onRecherche={setRecherche} />
+          <SearchBar
+            recherche={recherche}
+            onRecherche={setRecherche}
+          />
+
           <p className={styles.compteur}>
             {evenementsFiltres.length} evenement(s) trouve(s)
           </p>
+
           {evenementsFiltres.length === 0 ? (
             <p className={styles.messageVide}>
               Aucun evenement ne correspond.
             </p>
           ) : (
-            evenementsFiltres.map(ev => (
-              <EvenementCarte key={ev.id} ev={ev} afficherDetails={true} />
+            evenementsFiltres.map((ev) => (
+              <EvenementCarte
+                key={ev.id}
+                ev={ev}
+                afficherDetails={true}
+              />
             ))
           )}
         </>
@@ -138,74 +87,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { useState } from "react";
-// import EvenementCarte from "./components/EvenementCarte";
-// import SearchBar from "./components/SearchBar";
-// import styles from "./App.module.css";
-
-// const App = () => {
-//   const [evenements, setEvenements] = useState([]);
-//   const [chargement, setChargement] = useState(false);
-//   const [recherche, setRecherche] = useState("");
-
-//   const charger = async () => {
-//     setChargement(true);
-//     try {
-//       const reponse = await fetch("/evenements.json");
-//       const data = await reponse.json();
-//       setEvenements(data);
-//     } catch (error) {
-//       console.error("Erreur :", error);
-//     }
-//     setChargement(false);
-//   };
-
-//   // Filtrage en temps réel (insensible à la casse)
-//   const evenementsFiltres = evenements.filter((ev) =>
-//     ev.titre.toLowerCase().includes(recherche.toLowerCase())
-//   );
-
-//   return (
-//     <div className={styles.container}>
-//       <h1 className={styles.titre}>SenEvent --- Evenements a Dakar</h1>
-      
-//       <button 
-//         className={styles.bouton} 
-//         onClick={charger} 
-//         disabled={chargement}
-//       >
-//         {chargement ? "Chargement..." : "Charger les evenements"}
-//       </button>
-
-//       <SearchBar recherche={recherche} onRecherche={setRecherche} />
-
-//       <p className={styles.compteur}>
-//         {evenementsFiltres.length} evenement(s) trouve(s)
-//       </p>
-
-//       {evenementsFiltres.map((ev) => (
-//         <EvenementCarte key={ev.id} ev={ev} afficherDetails={true} />
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default App;
