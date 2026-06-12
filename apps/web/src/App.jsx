@@ -104,11 +104,10 @@ const App = () => {
       </p>
       {evenementsFiltres.map(ev => (
         <EvenementCarte key={ev.id} ev={ev} afficherDetails={true} />
-      ))}
+      ))}    
     </div>
   );
 };
-
 export default App;
 
 
