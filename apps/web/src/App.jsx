@@ -56,7 +56,7 @@ const charger = async () => {
       <Routes>
         <Route path="/" element={<Accueil evenements={evenements} chargement={chargement} erreur={erreur} onReessayer={charger} />} />
         <Route path="/nouveau" element={<NouvelEvenement onAjoutReussi={charger} />} />
-        <Route path="/evenement/:id" element={<Detail evenements={evenements} />} />
+        <Route path="/evenement/:id" element={<Detail evenements={evenements} session={session} />} />
         <Route path="/auth" element={<Auth />} />
       </Routes>
     </BrowserRouter>
