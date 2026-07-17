@@ -60,10 +60,13 @@ const Detail = ({ evenements, session }) => {
         />
       )}
       
+      
       <dl className={styles.infos}>
         <dt>Lieu</dt> <dd>{evenement.lieu_nom}</dd>
         <dt>Date</dt> <dd>{date}</dd>
         <dt>Prix</dt> <dd className={styles.prix}>{prix}</dd>
+        <dt>Organise par</dt>
+<dd>{evenement.profiles ? evenement.profiles.nom : "Equipe SenEvent"}</dd>
       </dl>
       
       {/* "session" fonctionne correctement maintenant qu'il est défini en haut */}

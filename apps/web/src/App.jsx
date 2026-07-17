@@ -31,10 +31,10 @@ const charger = async () => {
   setChargement(true);
   setErreur(null);
 
-  const { data, error } = await supabase
-    .from("evenements")
-    .select("*")
-    .order("date_debut", { ascending: true });
+ const { data, error } = await supabase
+  .from("evenements")
+  .select("*, profiles (nom)")
+  .order("date_debut", { ascending: true });
 
   if (error) {
     setErreur(error.message);
