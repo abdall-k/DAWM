@@ -11,6 +11,7 @@ const NouvelEvenement = ({ onAjoutReussi }) => {
   const [erreurs, setErreurs] = useState({});
   const [erreurServeur, setErreurServeur] = useState(null);
   const [enCours, setEnCours] = useState(false);
+  const [fichier, setFichier] = useState(null);
   const navigate = useNavigate();
 
   const valider = () => {
@@ -24,7 +25,7 @@ const NouvelEvenement = ({ onAjoutReussi }) => {
   const soumettre = async (event) => {
     event.preventDefault();
     setErreurServeur(null);
-    setErreurs({}); // Ajouté : Réinitialise les erreurs visuelles avant la nouvelle validation
+    setErreurs({});
 
     const erreursTrouvees = valider();
     if (Object.keys(erreursTrouvees).length > 0) {
@@ -41,6 +42,28 @@ const NouvelEvenement = ({ onAjoutReussi }) => {
       return;
     }
 
+    // --- Ajout : upload de l'image avant l'insert ---
+    let image_url = null;
+    if (fichier) {
+      const chemin = `${user.id}/${Date.now()}_${fichier.name}`;
+      const { error: eUp } = await supabase.storage
+        .from("affiches")
+        .upload(chemin, fichier);
+
+      if (eUp) {
+        setErreurServeur(eUp.message);
+        setEnCours(false);
+        return;
+      }
+
+      const { data: urlData } = supabase.storage
+        .from("affiches")
+        .getPublicUrl(chemin);
+
+      image_url = urlData.publicUrl;
+    }
+    // --- Fin ajout ---
+
     const { error } = await supabase.from("evenements").insert({
       titre: titre.trim(),
       categorie,
@@ -48,6 +71,7 @@ const NouvelEvenement = ({ onAjoutReussi }) => {
       prix: Number(prix),
       date_debut: new Date().toISOString(),
       organisateur_id: user.id,
+      image_url, // --- Ajout ---
     });
 
     setEnCours(false);
@@ -59,12 +83,13 @@ const NouvelEvenement = ({ onAjoutReussi }) => {
       navigate("/");
     }
   };
+
   return (
     <form className={styles.form} onSubmit={soumettre}>
       <h2>Ajouter un événement</h2>
-      
+
       {erreurServeur && <p className={styles.erreurBloc}>{erreurServeur}</p>}
-      
+
       <label className={styles.champ}>
         Titre
         <input
@@ -107,11 +132,21 @@ const NouvelEvenement = ({ onAjoutReussi }) => {
         {erreurs.prix && <span className={styles.erreur}>{erreurs.prix}</span>}
       </label>
 
+      {/* --- Ajout : champ fichier --- */}
+      <label className={styles.champ}>
+        Affiche (image, optionnel)
+        <input
+          type="file"
+          accept="image/*"
+          onChange={e => setFichier(e.target.files[0])}
+        />
+      </label>
+
       <button type="submit" className={styles.bouton} disabled={enCours}>
         {enCours ? "Ajout en cours..." : "Ajouter"}
       </button>
     </form>
   );
-}; // L'accolade ferme maintenant correctement tout le composant ici
+};
 
 export default NouvelEvenement;
