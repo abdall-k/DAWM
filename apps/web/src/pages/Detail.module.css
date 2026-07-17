@@ -20,7 +20,19 @@
   background: #1a3a5c;
   color: white;
 }
-
+.supprimer {
+  background-color: #c0392b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.supprimer:hover {
+  background-color: #a93226;
+}
 .titre {
   color: #1a3a5c;
   margin: 0.5rem 0;

@@ -1,7 +1,25 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "./Detail.module.css";
 import BoutonInscription from "../components/BoutonInscription";
+import { supabase } from "../lib/supabase";
 
+
+
+const supprimer = async () => {
+  const confirme = window.confirm("Supprimer cet evenement ?");
+  if (!confirme) return;
+
+  const { error } = await supabase
+    .from("evenements")
+    .delete()
+    .eq("id", evenement.id);
+
+  if (error) {
+    alert("Erreur : " + error.message);
+  } else {
+    navigate("/");
+  }
+};
 // 1. Correction : On récupère "session" depuis les props du composant parent
 const Detail = ({ evenements, session }) => {
   const { id } = useParams();
@@ -50,6 +68,11 @@ const Detail = ({ evenements, session }) => {
       
       {/* "session" fonctionne correctement maintenant qu'il est défini en haut */}
       <BoutonInscription evenementId={evenement.id} session={session} />
+      {session && session.user.id === evenement.organisateur_id && (
+  <button onClick={supprimer} className={styles.supprimer}>
+    Supprimer cet evenement
+  </button>
+)}
     </div>
   );
 };
