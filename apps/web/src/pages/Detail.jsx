@@ -1,33 +1,25 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "./Detail.module.css";
 import BoutonInscription from "../components/BoutonInscription";
-import { supabase } from "../lib/supabase";
+import { supprimerEvenement } from "@senevent/shared";
 
-
-
-const supprimer = async () => {
-  const confirme = window.confirm("Supprimer cet evenement ?");
-  if (!confirme) return;
-
-  const { error } = await supabase
-    .from("evenements")
-    .delete()
-    .eq("id", evenement.id);
-
-  if (error) {
-    alert("Erreur : " + error.message);
-  } else {
-    navigate("/");
-  }
-};
-// 1. Correction : On récupère "session" depuis les props du composant parent
 const Detail = ({ evenements, session }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // 2. Correction : Si tes ID Supabase sont des chaînes (UUID), retire Number(). 
-  // Si ce sont de simples entiers (1, 2, 3), tu peux laisser Number(id).
   const evenement = evenements.find((ev) => String(ev.id) === String(id));
+
+  const supprimer = async () => {
+    const confirme = window.confirm("Supprimer cet evenement ?");
+    if (!confirme) return;
+
+    try {
+      await supprimerEvenement(evenement.id);
+      navigate("/");
+    } catch (e) {
+      alert("Erreur : " + e.message);
+    }
+  };
 
   if (!evenement) {
     return (
@@ -38,7 +30,7 @@ const Detail = ({ evenements, session }) => {
     );
   }
 
-  const prix = evenement.prix === 0 ? " Gratuit " : `${evenement.prix} FCFA`;
+  const prix = evenement.prix === 0 ? "Gratuit" : `${evenement.prix} FCFA`;
   const date = new Date(evenement.date_debut).toLocaleString("fr-FR");
 
   return (
@@ -50,8 +42,7 @@ const Detail = ({ evenements, session }) => {
       <p className={styles.meta}>
         <span className={styles.categorie}>{evenement.categorie}</span>
       </p>
-      
-      {/* Petit conseil : N'affiche l'image que si elle existe dans ta base de données */}
+
       {evenement.image_url && (
         <img
           src={evenement.image_url}
@@ -59,23 +50,21 @@ const Detail = ({ evenements, session }) => {
           className={styles.image}
         />
       )}
-      
-      
+
       <dl className={styles.infos}>
         <dt>Lieu</dt> <dd>{evenement.lieu_nom}</dd>
         <dt>Date</dt> <dd>{date}</dd>
         <dt>Prix</dt> <dd className={styles.prix}>{prix}</dd>
         <dt>Organise par</dt>
-<dd>{evenement.profiles ? evenement.profiles.nom : "Equipe SenEvent"}</dd>
+        <dd>{evenement.profiles ? evenement.profiles.nom : "Equipe SenEvent"}</dd>
       </dl>
-      
-      {/* "session" fonctionne correctement maintenant qu'il est défini en haut */}
+
       <BoutonInscription evenementId={evenement.id} session={session} />
       {session && session.user.id === evenement.organisateur_id && (
-  <button onClick={supprimer} className={styles.supprimer}>
-    Supprimer cet evenement
-  </button>
-)}
+        <button onClick={supprimer} className={styles.supprimer}>
+          Supprimer cet evenement
+        </button>
+      )}
     </div>
   );
 };
