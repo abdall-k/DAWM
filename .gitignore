@@ -2,3 +2,4 @@
 # Variables d'environnement locales
 .env.local
 .env*.local
+apps/mobile/.env
