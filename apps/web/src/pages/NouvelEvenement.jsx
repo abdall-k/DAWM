@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../lib/supabase";
 import styles from "./NouvelEvenement.module.css";
+import { getSupabase, creerEvenement } from "@senevent/shared";
 
 const NouvelEvenement = ({ onAjoutReussi }) => {
   const [titre, setTitre] = useState("");
@@ -35,6 +35,7 @@ const NouvelEvenement = ({ onAjoutReussi }) => {
 
     setEnCours(true);
 
+    const supabase = getSupabase();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
       setErreurServeur("Vous devez être connecté.");
@@ -42,7 +43,7 @@ const NouvelEvenement = ({ onAjoutReussi }) => {
       return;
     }
 
-    // --- Ajout : upload de l'image avant l'insert ---
+    // --- Upload de l'image avant l'insert ---
     let image_url = null;
     if (fichier) {
       const chemin = `${user.id}/${Date.now()}_${fichier.name}`;
@@ -62,25 +63,24 @@ const NouvelEvenement = ({ onAjoutReussi }) => {
 
       image_url = urlData.publicUrl;
     }
-    // --- Fin ajout ---
 
-    const { error } = await supabase.from("evenements").insert({
-      titre: titre.trim(),
-      categorie,
-      lieu_nom: lieu.trim(),
-      prix: Number(prix),
-      date_debut: new Date().toISOString(),
-      organisateur_id: user.id,
-      image_url, // --- Ajout ---
-    });
-
-    setEnCours(false);
-
-    if (error) {
-      setErreurServeur(error.message);
-    } else {
+    // --- Remplacement par creerEvenement(...) ---
+try {
+      await creerEvenement({
+        titre: titre.trim(),
+        categorie,
+        lieu_nom: lieu.trim(),
+        prix: Number(prix),
+        date_debut: new Date().toISOString(),
+        organisateur_id: user.id,
+        image_url,
+      });
       onAjoutReussi();
       navigate("/");
+    } catch (e) {
+      setErreurServeur(e.message);
+    } finally {
+      setEnCours(false);
     }
   };
 
@@ -132,7 +132,6 @@ const NouvelEvenement = ({ onAjoutReussi }) => {
         {erreurs.prix && <span className={styles.erreur}>{erreurs.prix}</span>}
       </label>
 
-      {/* --- Ajout : champ fichier --- */}
       <label className={styles.champ}>
         Affiche (image, optionnel)
         <input

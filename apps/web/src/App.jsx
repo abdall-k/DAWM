@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { supabase } from "./lib/supabase";
+import { getEvenements, getSupabase } from "@senevent/shared";
 import Accueil from "./pages/Accueil";
 import NouvelEvenement from "./pages/NouvelEvenement";
 import Detail from "./pages/Detail";
@@ -13,35 +13,27 @@ const App = () => {
   const [erreur, setErreur] = useState(null);
   const [session, setSession] = useState(null);
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-    });
-
-    const { data: subscription } = supabase.auth.onAuthStateChange(
-      (_event, newSession) => {
-        setSession(newSession);
-      }
-    );
-
-    return () => subscription.subscription.unsubscribe();
-  }, []);
+useEffect(() => {
+  getSupabase().auth.getSession().then(({ data }) => {
+    setSession(data.session);
+  });
+  const { data: subscription } = getSupabase().auth.onAuthStateChange(
+    (_event, newSession) => setSession(newSession)
+  );
+  return () => subscription.subscription.unsubscribe();
+}, []);
 
 const charger = async () => {
   setChargement(true);
   setErreur(null);
-
- const { data, error } = await supabase
-  .from("evenements")
-  .select("*, profiles (nom)")
-  .order("date_debut", { ascending: true });
-
-  if (error) {
-    setErreur(error.message);
-  } else {
+  try {
+    const data = await getEvenements();
     setEvenements(data);
+  } catch (e) {
+    setErreur(e.message);
+  } finally {
+    setChargement(false);
   }
-  setChargement(false);
 };
 
   useEffect(() => { charger(); }, []);
