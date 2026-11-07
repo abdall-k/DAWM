@@ -1,0 +1,32 @@
+import { StyleSheet, Text, View } from "react-native";
+
+export default function ProfilScreen() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.titre}>Mon profil</Text>
+      <Text style={styles.description}>
+        La connexion et l'inscription arriveront au Lab 10.
+      </Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 24,
+    backgroundColor: "#f0f4f8",
+  },
+  titre: {
+    color: "#1a3a5c",
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  description: {
+    marginTop: 8,
+    color: "#666",
+    textAlign: "center",
+  },
+});
