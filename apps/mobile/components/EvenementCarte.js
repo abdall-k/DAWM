@@ -1,4 +1,5 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { Link } from "expo-router";
+import { View, Text, Image, Pressable, StyleSheet } from "react-native";
 
 const COULEURS_CATEGORIE = {
   concert: "#e74c3c",
@@ -17,31 +18,33 @@ export default function EvenementCarte({ evenement }) {
   });
 
   return (
-    <View style={styles.carte}>
-      {evenement.image_url ? (
-        <Image source={{ uri: evenement.image_url }} style={styles.image} />
-      ) : (
-        <View style={[styles.image, styles.imagePlaceholder]}>
-          <Text style={styles.imagePlaceholderTexte}>📅</Text>
-        </View>
-      )}
-
-      <View style={styles.dateBadge}>
-        <Text style={styles.dateBadgeTexte}>{date}</Text>
-      </View>
-
-      <View style={styles.contenu}>
-        <Text style={styles.titre} numberOfLines={1}>{evenement.titre}</Text>
-        <Text style={styles.lieu}>📍 {evenement.lieu_nom}</Text>
-
-        <View style={styles.pied}>
-          <View style={[styles.categorie, { backgroundColor: couleurCategorie }]}>
-            <Text style={styles.categorieTexte}>{evenement.categorie}</Text>
+    <Link href={`/evenement/${evenement.id}`} asChild>
+      <Pressable style={styles.carte}>
+        {evenement.image_url ? (
+          <Image source={{ uri: evenement.image_url }} style={styles.image} />
+        ) : (
+          <View style={[styles.image, styles.imagePlaceholder]}>
+            <Text style={styles.imagePlaceholderTexte}>📅</Text>
           </View>
-          <Text style={styles.prix}>{prix}</Text>
+        )}
+
+        <View style={styles.dateBadge}>
+          <Text style={styles.dateBadgeTexte}>{date}</Text>
         </View>
-      </View>
-    </View>
+
+        <View style={styles.contenu}>
+          <Text style={styles.titre} numberOfLines={1}>{evenement.titre}</Text>
+          <Text style={styles.lieu}>📍 {evenement.lieu_nom}</Text>
+
+          <View style={styles.pied}>
+            <View style={[styles.categorie, { backgroundColor: couleurCategorie }]}>
+              <Text style={styles.categorieTexte}>{evenement.categorie}</Text>
+            </View>
+            <Text style={styles.prix}>{prix}</Text>
+          </View>
+        </View>
+      </Pressable>
+    </Link>
   );
 }
 
