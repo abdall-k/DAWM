@@ -25,3 +25,12 @@ export async function desinscrire(evenementId: number, utilisateurId: string) {
     .eq("utilisateur_id", utilisateurId);
   if (error) throw error;
 }
+
+export async function mesInscriptions(utilisateurId: string) {
+  const { data, error } = await getSupabase()
+    .from("inscriptions")
+    .select("evenement_id, evenements(titre, date_debut)")
+    .eq("utilisateur_id", utilisateurId);
+  if (error) throw error;
+  return data ?? [];
+}
