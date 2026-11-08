@@ -1,5 +1,22 @@
-import { Tabs } from "expo-router";
+import { Pressable } from "react-native";
+import { Tabs, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { useAuth } from "../../context/AuthContext";
+
+function BoutonAjouter() {
+  const { session } = useAuth();
+  const router = useRouter();
+
+  if (!session) {
+    return null;
+  }
+
+  return (
+    <Pressable onPress={() => router.push("/nouveau")} style={{ marginRight: 16 }}>
+      <Ionicons name="add-circle" size={28} color="#fff" />
+    </Pressable>
+  );
+}
 
 export default function TabsLayout() {
   return (
@@ -14,6 +31,7 @@ export default function TabsLayout() {
         name="index"
         options={{
           title: "Evenements",
+          headerRight: () => <BoutonAjouter />,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar" color={color} size={size} />
           ),

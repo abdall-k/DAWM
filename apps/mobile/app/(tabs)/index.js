@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -9,6 +9,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { useFocusEffect } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { getEvenements } from "@senevent/shared";
@@ -32,19 +33,21 @@ export default function EvenementsScreen() {
   const [tarif, setTarif] = useState("tous");
   const [periode, setPeriode] = useState("tous");
 
-  useEffect(() => {
-    const charger = async () => {
-      try {
-        const data = await getEvenements();
-        setEvenements(data);
-      } catch (e) {
-        setErreur(e.message);
-      } finally {
-        setChargement(false);
-      }
-    };
-    charger();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      const charger = async () => {
+        try {
+          const data = await getEvenements();
+          setEvenements(data);
+        } catch (e) {
+          setErreur(e.message);
+        } finally {
+          setChargement(false);
+        }
+      };
+      charger();
+    }, [])
+  );
 
   const evenementsFiltres = evenements
     .filter((evenement) => {
