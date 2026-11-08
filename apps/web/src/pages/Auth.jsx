@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { sInscrire, seConnecter, getSupabase } from "@senevent/shared";
+import { sInscrire, seConnecter } from "@senevent/shared";
 import { useNavigate } from "react-router-dom";
 import styles from "./Auth.module.css";
 
@@ -18,13 +18,7 @@ const Auth = () => {
     setEnCours(true);
     try {
       if (mode === "signup") {
-        const data = await sInscrire(email, motDePasse);
-        if (data.user) {
-          const { error: e2 } = await getSupabase()
-            .from("profiles")
-            .insert({ id: data.user.id, nom, role: "PUBLIC" });
-          if (e2) throw e2;
-        }
+        await sInscrire(email, motDePasse, nom);
       } else {
         await seConnecter(email, motDePasse);
       }
