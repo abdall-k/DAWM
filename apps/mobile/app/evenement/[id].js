@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { getEvenements } from "@senevent/shared";
+import BoutonInscription from "../../components/BoutonInscription";
 
 export default function DetailEvenementScreen() {
   const { id } = useLocalSearchParams();
@@ -77,6 +78,7 @@ export default function DetailEvenementScreen() {
         <Ligne label="Lieu" valeur={evenement.lieu_nom} />
         <Ligne label="Date" valeur={date} />
         <Ligne label="Prix" valeur={prix} />
+        <BoutonInscription evenementId={evenement.id} />
       </View>
       <BoutonRetour onPress={() => router.push("/")} />
     </ScrollView>
