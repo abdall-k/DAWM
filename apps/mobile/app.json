@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "SenEvent",
+    "slug": "senevent",
     "scheme": "senevent",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,9 +13,9 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#1a3a5c"
       },
-      "package": "com.labotech221.mobile"
+      "package": "sn.ucad.senevent.equipe1"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -32,6 +32,17 @@
         }
       ],
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "8ce8c442-73e9-4541-954c-9b7a0c8511e0"
+      }
+    },
+    "owner": "labotech221"
   }
 }
